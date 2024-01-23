@@ -1,0 +1,8 @@
+當DB的監控工具顯示異常時，我會按下列步驟除錯
+
+#1.檢查MySQL的slow query log，確認是否有異常SQL，並針對SQL語法優化
+#2.檢查Laravel的Log，確認是否為Laravel導致塞車
+#3.檢查Nginx的Error Log，確認是否為Nginx異常
+#4.檢查Nginx的Access Log，利用awk語法，擷取IP出來，判斷是否有攻擊的狀況
+#5.檢查Linux的錯誤Log
+#6.尋求系統供應商是否有異常

@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "841362d8-46b1-460e-a3fa-9d854fde0a10",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "145602"
+	},
+	"item": [
+		{
+			"name": "文章",
+			"item": [
+				{
+					"name": "建立文章",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":\"99991\",\n    \"title\":\"測試\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新文章",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_id\":\"1\",\n    \"title\":\"測試22\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "軟刪除文章",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_id\":\"24\",\n    \"title\":\"測試22\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得文章列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":\"99991\",\n    \"title\":\"測試\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/list?email=andy4@googl.com&page=1&sortOrder=ASC&sortBy=updated_at&searchBy=post_id&searchContent=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"list"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "andy4@googl.com"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC",
+									"description": "僅接受'DESC','ASC'"
+								},
+								{
+									"key": "sortBy",
+									"value": "updated_at",
+									"description": "僅接受'post_id','title','content','updated_at'"
+								},
+								{
+									"key": "searchBy",
+									"value": "post_id",
+									"description": "僅接受'post_id','title','content'"
+								},
+								{
+									"key": "searchContent",
+									"value": ""
+								},
+								{
+									"key": "te",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得特殊排序文章列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":\"99991\",\n    \"title\":\"測試\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/custom/list?email=andy4@googl.com&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"custom",
+								"list"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "andy4@googl.com"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "te",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "會員",
+			"item": [
+				{
+					"name": "註冊會員",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"andy1@googl.com\",\n    \"password\":\"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登入",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Success', function() {",
+									"    let response = JSON.parse(responseBody);",
+									"    if (response.statusCode == '0') {",
+									"        pm.environment.set('jwt', response.payload.token)",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"andy4@googl.com\",\n    \"password\":\"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

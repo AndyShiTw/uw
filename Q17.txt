@@ -1,0 +1,11 @@
+#1.inner join會將兩張表有共同UserID的資料做mapping
+#2.right join會以右邊的表為主，如果左側的表找得到資料就顯示，找不到就null
+#3.通常right/left join，是用來查詢主表與明細表，找不到底下資料的狀況
+例如想要找所有會員下過幾筆訂單，就可以用left join處理
+SELECT UserID,count(1) as num
+FROM User a
+LEFT JOIN ProductPurchaed b
+	ON a.UserID = b.UserID
+GROUP BY a.UserID
+
+詳細答案可參見Q17_Query.xlsx

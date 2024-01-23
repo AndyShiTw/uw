@@ -1,0 +1,11 @@
+如果是針對CRUD的API Framework做設計，我認為必要的功能如下
+
+#1.JWT的驗證功能
+#2.支持AES加密
+#3.基於guzzlehttp，能curl訪問第三方
+#4.基於swagger，能快速產生Restful API文件
+#5.Log紀錄
+#6.DB、Redis的連線與讀寫功能
+#7.統一API output時，StatusCode與PayLoad的格式
+#8.Crond、Queue功能
+#9.單元測試功能
