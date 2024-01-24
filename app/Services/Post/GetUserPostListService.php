@@ -6,7 +6,7 @@ use App\Repositories\Post\PostRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\ServiceAbstract;
 
-class GetPostListService extends ServiceAbstract
+class GetUserPostListService extends ServiceAbstract
 {
     private $postRepository;
     private $userRepository;
@@ -24,7 +24,6 @@ class GetPostListService extends ServiceAbstract
         $this->params = $params;
 
         $validator = $this->validator($this->params, [
-            'email' => 'required|email',
             'page' => 'integer',
         ]);
 
@@ -38,7 +37,7 @@ class GetPostListService extends ServiceAbstract
     // 主要邏輯
     protected function process()
     {
-        $email = $this->params['email'];
+        $userId = $this->params['user_id'];
         $page = $this->params['page'] ?? 1;
         $sortBy = $this->params['sortBy'] ?? 'post_id';
         $sortOrder = $this->params['sortOrder'] ?? 'DESC';
@@ -58,16 +57,8 @@ class GetPostListService extends ServiceAbstract
             $searchBy = '';
         }
 
-        // 檢查Email是否存在
-        $checkEmail = $this->userRepository->getUserByEmail($email);
-        if($checkEmail === null) {
-            return ['result' => false, 'code' => 2001, 'message' => '查無帳號'];
-        }
-
-        $userId = $checkEmail->user_id;
-
-        // 取得文章
-        $postList = $this->postRepository->getPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent);
+        // 取得自己的文章
+        $postList = $this->postRepository->getAllPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent);
         $lastPage = $postList->lastPage();
         $totalPage = $postList->total();
 

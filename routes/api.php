@@ -30,4 +30,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/post/create', [PostController::class, 'createPost']);
     Route::post('/post/update', [PostController::class, 'updatePost']);
     Route::post('/post/delete', [PostController::class, 'deletePost']);
+    Route::get('/post/user_list', [PostController::class, 'getUserPostList']);
+    Route::post('/post/active', [PostController::class, 'activePost']);
+    Route::post('/post/inactive', [PostController::class, 'inactivePost']);
 });

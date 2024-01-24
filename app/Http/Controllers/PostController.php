@@ -8,6 +8,9 @@ use App\Services\Post\GetPostListService;
 use App\Services\Post\UpdatePostService;
 use App\Services\Post\DeletePostService;
 use App\Services\Post\GetPostCustomListService;
+use App\Services\Post\GetUserPostListService;
+use App\Services\Post\InactivePostService;
+use App\Services\Post\activePostService;
 use Illuminate\Http\Request;
 
 class PostController extends BaseController
@@ -64,6 +67,36 @@ class PostController extends BaseController
     public function getPostCustomList(Request $request)
     {
         $service = app()->make(GetPostCustomListService::class);
+        $service->handle($request->all());
+        if (!$service->getProcessResult()) {
+            return $this->apiResponse('', 500, (object) []);
+        }
+        return $this->apiResponse('', 0, $service->getData());
+    }
+
+    public function getUserPostList(Request $request)
+    {
+        $service = app()->make(GetUserPostListService::class);
+        $service->handle($request->all());
+        if (!$service->getProcessResult()) {
+            return $this->apiResponse('', 500, (object) []);
+        }
+        return $this->apiResponse('', 0, $service->getData());
+    }
+
+    public function inactivePost(Request $request)
+    {
+        $service = app()->make(InactivePostService::class);
+        $service->handle($request->all());
+        if (!$service->getProcessResult()) {
+            return $this->apiResponse('', 500, (object) []);
+        }
+        return $this->apiResponse('', 0, $service->getData());
+    }
+
+    public function activePost(Request $request)
+    {
+        $service = app()->make(activePostService::class);
         $service->handle($request->all());
         if (!$service->getProcessResult()) {
             return $this->apiResponse('', 500, (object) []);

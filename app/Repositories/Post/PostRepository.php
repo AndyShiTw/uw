@@ -45,7 +45,7 @@ class PostRepository
         return $this->post
             ->where("user_id",$userId)
             ->where("post_id",$postId)
-            ->where('post_status',"10")
+            ->whereIn('post_status',["10","15"])
             ->first();
     }
 
@@ -53,25 +53,50 @@ class PostRepository
     {
         $query = $this->post
             ->where('post_id', $postId)
-            ->where('post_status',"10")
+            ->whereIn('post_status',['10','15'])
             ->update([
                 'title' => $title,
                 'content' => $content,
                 'image' => $image,
             ]);
         return $query;
-        
     }
 
     public function softDeletePost($postId,$title,$content,$image)
     {
         $query = $this->post
             ->where('post_id', $postId)
-            ->where('post_status','10')
+            ->whereIn('post_status',['10','15'])
             ->update([
                 'post_status' => '20',
             ]);
         return $query;
         
+    }
+
+    public function getAllPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent) {
+        $data = $this->post
+                ->whereIn("post_status",[10,15])
+                ->where("user_id",$userId)
+                ->orderBy($sortBy, $sortOrder);
+
+        if($searchBy != '') {
+            $data = $data->where($searchBy,'like','%'.$searchContent.'%');
+        }
+        
+
+        $data = $data->paginate($perPage, ['*'], 'page', $page);
+        return $data;
+    }
+
+    public function updatePostStatus($postId,$postStatus)
+    {
+        $query = $this->post
+            ->where('post_id', $postId)
+            ->whereIn('post_status',['10','15'])
+            ->update([
+                'post_status' => $postStatus,
+            ]);
+        return $query;
     }
 }
