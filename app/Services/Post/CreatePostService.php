@@ -57,8 +57,11 @@ class CreatePostService extends ServiceAbstract
             return ['result' => false, 'code' => 2002, 'message' => '會員不存在'];
         }
 
+        $maxSeq = $this->postRepository->getPostMaxSeq($userId) ?? 0;
+        $maxSeq++;
+
         // 發布文章
-        $postId = $this->postRepository->createPost($userId,$title,$content,$imageUrl,$postStatus);
+        $postId = $this->postRepository->createPost($userId,$title,$content,$imageUrl,$postStatus,$maxSeq);
 
         return ['result' => true, 'data' => ['postId' => $postId->post_id]];
     }

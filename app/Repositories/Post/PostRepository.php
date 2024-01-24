@@ -15,7 +15,7 @@ class PostRepository
         $this->post = $post;
     }
 
-    public function createPost($userId,$title,$content,$image,$postStatus)
+    public function createPost($userId,$title,$content,$image,$postStatus,$maxSeq)
     {
         return $this->post->create([
             'user_id' => $userId,
@@ -23,6 +23,7 @@ class PostRepository
             'content' => $content,
             'image' => $image,
             'post_status' => $postStatus,
+            'seq' => $maxSeq,
         ]);
     }
 
@@ -98,5 +99,11 @@ class PostRepository
                 'post_status' => $postStatus,
             ]);
         return $query;
+    }
+
+    public function getPostMaxSeq($userId) {
+        return $this->post
+            ->where("user_id",$userId)
+            ->max('seq');
     }
 }

@@ -11,14 +11,16 @@ Q12說明
 #3 無使用Redis功能，若需Redis功能，預計是將新增、刪除、修改文章都列入Queue，完成後刷新文章清單的Redis，避免多個Request進入時，Redis遺漏資料
 #4 圖片功能暫時先實作儲存url，若需要上傳圖片需要考慮上傳機制與CDN架構
 #5 Swagger尚未實作
+
 #6 並沒有完全按照Restful架構實作，僅使用get與post，具體API功能如下
 #6.1 會員註冊 http://localhost/api/user/register
 #6.2 會員登入 http://localhost/api/user/login
-#6.3 文章清單 http://localhost/api/post/list
+#6.3 公開視角文章清單 http://localhost/api/post/list
 搜尋、排序功能皆製作於此，需輸入指定的email帳號，因部落格會有主人，認知上應該不需要提供不同會員持有的部落格文章搜尋
-#6.3 建立文章 http://localhost/api/post/create，藉由JWT取得user_id 
-#6.4 更新文章 http://localhost/api/post/update，藉由JWT驗證post_id與user_id是否相符
+#6.3 建立文章 http://localhost/api/post/create，藉由JWT取得user_id，如果考慮高併發，會使用Queue處理
+#6.4 更新文章 http://localhost/api/post/update，藉由JWT驗證post_id與user_id是否相符，如果考慮高併發，會使用Queue處理
 #6.5 刪除文章 http://localhost/api/post/delete，利用post_status，隱藏會員想刪除的文章
 #6.6 客製排序 http://localhost/api/post/custom/list，僅顯示post_id為奇數的文章
-#6.7 Set Active
-#6.8 Set Inactive
+#6.7 會員視角所有文章 http://localhost/api/post/user_list，可檢視隱藏的文章
+#6.8 將隱藏文章公開 http://localhost/api/post/active，藉由JWT驗證post_id與user_id是否相符
+#6.9 將公開文章隱藏 http://localhost/api/post/inactive，藉由JWT驗證post_id與user_id是否相符

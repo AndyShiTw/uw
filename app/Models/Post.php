@@ -27,6 +27,7 @@ class Post extends Authenticatable
         'content',
         'image',
         'post_status',
+        'seq'
     ];
 
     /**

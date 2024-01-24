@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('content');
             $table->string('image');
             $table->integer('post_status');
+            $table->integer('seq');
             $table->timestamps();
         });
     }
