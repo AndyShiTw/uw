@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\":\"99991\",\n    \"title\":\"測試\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"raw": "{\n    \"user_id\":\"-100\",\n    \"title\":\"測試\",\n    \"content\":\"內文222\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"post_id\":\"1\",\n    \"title\":\"測試22\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"raw": "{\n    \"post_id\":\"33\",\n    \"user_id\":\"22932893\",\n    \"title\":\"87778\",\n    \"content\":\"121212\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,7 +104,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"post_id\":\"24\",\n    \"title\":\"測試22\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"raw": "{\n    \"post_id\":\"30\",\n    \"title\":\"測試22\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -127,19 +127,23 @@
 					"response": []
 				},
 				{
-					"name": "取得文章列表",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "隱藏文章",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\":\"99991\",\n    \"title\":\"測試\",\n    \"content\":\"內文\",\n    \"image\":\"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png\"\n}",
+							"raw": "{\n    \"post_id\":\"28\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +151,108 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api/post/list?email=andy4@googl.com&page=1&sortOrder=ASC&sortBy=updated_at&searchBy=post_id&searchContent=",
+							"raw": "http://localhost/api/post/inactive",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"inactive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "公開文章",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_id\":\"28\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "交換文章順序",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_id\":\"15\",\n    \"seq\":\"1\",\n    \"target_post_id\":\"19\",\n    \"target_seq\":\"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/post/sort",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"sort"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得公開視角的文章列表",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/post/list?page=1&user_id=777&email=andy2@go",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -159,8 +264,75 @@
 							],
 							"query": [
 								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC",
+									"description": "僅接受'DESC','ASC'",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "title",
+									"description": "僅接受'post_id','title','content','updated_at'",
+									"disabled": true
+								},
+								{
+									"key": "searchBy",
+									"value": "content",
+									"description": "僅接受'post_id','title','content'",
+									"disabled": true
+								},
+								{
+									"key": "searchContent",
+									"value": "123",
+									"disabled": true
+								},
+								{
+									"key": "user_id",
+									"value": "777"
+								},
+								{
 									"key": "email",
-									"value": "andy4@googl.com"
+									"value": "andy2@go"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得會員所有文章列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/post/user_list?email=andy1@go&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"post",
+								"user_list"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "andy1@go"
 								},
 								{
 									"key": "page",
@@ -169,25 +341,29 @@
 								{
 									"key": "sortOrder",
 									"value": "ASC",
-									"description": "僅接受'DESC','ASC'"
+									"description": "僅接受'DESC','ASC'",
+									"disabled": true
 								},
 								{
 									"key": "sortBy",
-									"value": "updated_at",
-									"description": "僅接受'post_id','title','content','updated_at'"
+									"value": "title",
+									"description": "僅接受'post_id','title','content','updated_at'",
+									"disabled": true
 								},
 								{
 									"key": "searchBy",
-									"value": "post_id",
-									"description": "僅接受'post_id','title','content'"
+									"value": "content",
+									"description": "僅接受'post_id','title','content'",
+									"disabled": true
 								},
 								{
 									"key": "searchContent",
-									"value": ""
+									"value": "123",
+									"disabled": true
 								},
 								{
-									"key": "te",
-									"value": "",
+									"key": "user_id",
+									"value": "777",
 									"disabled": true
 								}
 							]
@@ -202,7 +378,14 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
@@ -216,7 +399,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api/post/custom/list?email=andy4@googl.com&page=1",
+							"raw": "http://localhost/api/post/user_list?page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -224,22 +407,22 @@
 							"path": [
 								"api",
 								"post",
-								"custom",
-								"list"
+								"user_list"
 							],
 							"query": [
 								{
 									"key": "email",
-									"value": "andy4@googl.com"
-								},
-								{
-									"key": "page",
-									"value": "1"
+									"value": "andy1@go",
+									"disabled": true
 								},
 								{
 									"key": "te",
 									"value": "",
 									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
 								}
 							]
 						}
@@ -258,7 +441,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"andy1@googl.com\",\n    \"password\":\"1\"\n}",
+							"raw": "{\n    \"email\":\"andy2@go\",\n    \"password\":\"1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -312,7 +495,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"andy4@googl.com\",\n    \"password\":\"1\"\n}",
+							"raw": "{\n    \"email\":\"andy1@go\",\n    \"password\":\"1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
