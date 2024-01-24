@@ -41,7 +41,7 @@ class GetPostCustomListService extends ServiceAbstract
     {
         $email = $this->params['email'];
         $page = $this->params['page'] ?? 1;
-        $perPage = PHP_INT_MAX;
+        $perPage = 10;
 
         // 檢查Email是否存在
         $checkEmail = $this->userRepository->getUserByEmail($email);
@@ -51,22 +51,31 @@ class GetPostCustomListService extends ServiceAbstract
 
         $userId = $checkEmail->user_id;
 
-        // 發布文章
-        $postList = $this->postRepository->getPostListByUserId($userId,$perPage,$page,'post_id','DESC','','');
+        // 取得文章
+        $postList = $this->postRepository->getPostListByUserId($userId,PHP_INT_MAX,'1','post_id','DESC','','');
         
-
         $dataList = $postList->filter(function ($post) {
             return $post->post_id % 2 == 1;
         });
 
+        // 獲取總數據量
+        $totalData = $dataList->count();
+        $totalPage = ceil($totalData/$perPage);
+        if($page > $totalPage) {
+            $page = $totalPage;
+        }
+
+        // 計算當前頁面的數據
+        $offset = ($page - 1) * $perPage;
+        $itemsForCurrentPage = array_slice($dataList->all(), $offset, $perPage);
+
+        // 建立分頁器
         $paginator = new LengthAwarePaginator(
-            $dataList,
-            $dataList->count(),
+            $itemsForCurrentPage,
+            $totalData,
             $perPage,
             $page,
         );
-
-        $totalPage = $dataList->count();
         
         $dataList = [];
         foreach($paginator as $post) {
@@ -75,8 +84,9 @@ class GetPostCustomListService extends ServiceAbstract
                 'title' => $post->title,
                 'content' => $post->content,
                 'image' => $post->image,
-                'updated_at' => $post->updated_at,
+                'updated_at' => $post->updated_at->format('Y-m-d H:i:s')
             ]);
+            // dd($post->updated_at);
         }
 
         return ['result' => true, 'data' => ["dataList" => $dataList , "totalPage" => $totalPage]];

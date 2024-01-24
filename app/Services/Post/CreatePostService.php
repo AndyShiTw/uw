@@ -30,6 +30,10 @@ class CreatePostService extends ServiceAbstract
             'image' => 'required|url'
         ]);
 
+        if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $this->params['image']) == false) {
+            return ['result' => false, 'message' => 'image url錯誤'];
+        }
+
         if ($validator->fails()) {
             return ['result' => false, 'message' => '參數錯誤'];
         }

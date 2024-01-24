@@ -29,6 +29,7 @@ class PostRepository
     public function getPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent) {
         $data = $this->post
                 ->where("post_status",10)
+                ->where("user_id",$userId)
                 ->orderBy($sortBy, $sortOrder);
 
         if($searchBy != '') {
