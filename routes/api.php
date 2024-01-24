@@ -25,7 +25,6 @@ Route::post('/user/login', [UserController::class, 'login']);
 
 
 Route::get('/post/list', [PostController::class, 'getPostList']);
-Route::get('/post/custom/list', [PostController::class, 'getPostCustomList']);
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/post/create', [PostController::class, 'createPost']);
     Route::post('/post/update', [PostController::class, 'updatePost']);
@@ -33,4 +32,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/post/user_list', [PostController::class, 'getUserPostList']);
     Route::post('/post/active', [PostController::class, 'activePost']);
     Route::post('/post/inactive', [PostController::class, 'inactivePost']);
+    Route::post('/post/sort', [PostController::class, 'sortPost']);
 });

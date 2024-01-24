@@ -40,18 +40,18 @@ class GetPostListService extends ServiceAbstract
     {
         $email = $this->params['email'];
         $page = $this->params['page'] ?? 1;
-        $sortBy = $this->params['sortBy'] ?? 'post_id';
-        $sortOrder = $this->params['sortOrder'] ?? 'DESC';
+        $sortBy = $this->params['sortBy'] ?? '';
+        $sortOrder = $this->params['sortOrder'] ?? '';
         $searchBy = $this->params['searchBy'] ?? '';
         $searchContent = $this->params['searchContent'] ?? '';
         $perPage = 10;
 
         if(in_array($sortBy,['post_id','title','content','updated_at']) === false) {
-            $sortBy = 'post_id';
+            $sortBy = '';
         }
 
         if(in_array($sortOrder,['DESC','ASC']) === false) {
-            $sortOrder = 'DESC';
+            $sortOrder = '';
         }
 
         if(in_array($searchBy,['post_id','title','content']) === false) {
@@ -83,6 +83,7 @@ class GetPostListService extends ServiceAbstract
                 'content' => $post->content,
                 'image' => $post->image,
                 'updated_at' => $post->updated_at->format('Y-m-d h:i:s'),
+                'seq' => $post->seq,
             ]);
         }
 

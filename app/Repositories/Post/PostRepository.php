@@ -30,12 +30,17 @@ class PostRepository
     public function getPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent) {
         $data = $this->post
                 ->where("post_status",10)
-                ->where("user_id",$userId)
-                ->orderBy($sortBy, $sortOrder);
+                ->where("user_id",$userId);
+                
+        if($sortBy != '') {
+            $data = $data->orderBy($sortBy, $sortOrder);
+        }
 
         if($searchBy != '') {
             $data = $data->where($searchBy,'like','%'.$searchContent.'%');
         }
+
+        $data = $data->orderBy('seq','ASC');
         
 
         $data = $data->paginate($perPage, ['*'], 'page', $page);
@@ -78,12 +83,17 @@ class PostRepository
     public function getAllPostListByUserId($userId,$perPage,$page,$sortBy,$sortOrder,$searchBy,$searchContent) {
         $data = $this->post
                 ->whereIn("post_status",[10,15])
-                ->where("user_id",$userId)
-                ->orderBy($sortBy, $sortOrder);
+                ->where("user_id",$userId);
+
+        if($sortBy != '') {
+            $data = $data->orderBy($sortBy, $sortOrder);
+        }                
 
         if($searchBy != '') {
             $data = $data->where($searchBy,'like','%'.$searchContent.'%');
         }
+
+        $data = $data->orderBy('seq','ASC');
         
 
         $data = $data->paginate($perPage, ['*'], 'page', $page);
@@ -105,5 +115,15 @@ class PostRepository
         return $this->post
             ->where("user_id",$userId)
             ->max('seq');
+    }
+
+    public function changePostSeq($postId,$seq,$targetPostId,$targetSeq) {
+        $this->post
+            ->where("post_id",$postId)
+            ->update(["seq" => $targetSeq]);
+
+        $this->post
+            ->where("post_id",$targetPostId)
+            ->update(["seq" => $seq]);
     }
 }

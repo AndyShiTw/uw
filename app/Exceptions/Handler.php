@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
         // dd($request, $exception);
         $exceptionMessage = [
             'statusCode' => "4001",
-            'message' => '请联络开发人员',
+            'message' => '請聯絡開發人員',
             'payload' => (object) [],
         ];
 
@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
         };
 
         if (in_array($exceptionMessage['statusCode'], ["4001", "500"])) {
-            $exceptionMessage['message'] =  '请联络开发人员';
+            $exceptionMessage['message'] =  '請聯絡開發人員';
         }
 
         unset($exceptionMessage['error']);

@@ -7,7 +7,7 @@ use App\Services\Post\CreatePostService;
 use App\Services\Post\GetPostListService;
 use App\Services\Post\UpdatePostService;
 use App\Services\Post\DeletePostService;
-use App\Services\Post\GetPostCustomListService;
+use App\Services\Post\SortPostService;
 use App\Services\Post\GetUserPostListService;
 use App\Services\Post\InactivePostService;
 use App\Services\Post\activePostService;
@@ -64,9 +64,9 @@ class PostController extends BaseController
         return $this->apiResponse('', 0, $service->getData());
     }
 
-    public function getPostCustomList(Request $request)
+    public function sortPost(Request $request)
     {
-        $service = app()->make(GetPostCustomListService::class);
+        $service = app()->make(SortPostService::class);
         $service->handle($request->all());
         if (!$service->getProcessResult()) {
             return $this->apiResponse('', 500, (object) []);

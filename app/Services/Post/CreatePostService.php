@@ -5,6 +5,7 @@ namespace App\Services\Post;
 use App\Repositories\Post\PostRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\ServiceAbstract;
+use Illuminate\Support\Facades\DB;
 
 class CreatePostService extends ServiceAbstract
 {
@@ -57,12 +58,22 @@ class CreatePostService extends ServiceAbstract
             return ['result' => false, 'code' => 2002, 'message' => '會員不存在'];
         }
 
-        $maxSeq = $this->postRepository->getPostMaxSeq($userId) ?? 0;
-        $maxSeq++;
-
-        // 發布文章
-        $postId = $this->postRepository->createPost($userId,$title,$content,$imageUrl,$postStatus,$maxSeq);
-
-        return ['result' => true, 'data' => ['postId' => $postId->post_id]];
+        try {
+            DB::beginTransaction();
+        
+            $maxSeq = $this->postRepository->getPostMaxSeq($userId) ?? 0;
+            $maxSeq++;
+        
+            $post = $this->postRepository->createPost($userId, $title, $content, $imageUrl, $postStatus, $maxSeq);
+        
+            // 提交事务
+            DB::commit();
+        
+            return ['result' => true, 'data' => ['postId' => $post->post_id]];
+        } catch (\Exception $e) {
+            DB::rollBack();
+        
+            return ['result' => false, 'code' => 4001, 'message' => '請聯繫開發人員'];
+        }
     }
 }
