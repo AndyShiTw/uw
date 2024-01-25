@@ -1,7 +1,7 @@
 執行步驟
-#1 執行「DB_HOST=127.0.0.1 php artisan migrate」 => 因為使用Laradock，於docker外執行migrate會需要指定本地IP
-#2 cd laradock
-#3 docker-compose up -d nginx mysql redis
+#1 cd laradock
+#2 docker-compose up -d nginx mysql redis
+#3 執行「DB_HOST=127.0.0.1 php artisan migrate」 => 因為使用Laradock，於docker外執行migrate會需要指定本地IP
 #4 匯入Postman，進行測試，檔案名稱Q12_POSTMAN.json
 #5 若註冊與登入顯示1040，代表POSTMAN的自動讀取output並設定到Header的JWT異常，需要再做排除，或可手動登入後將token放置header採用bearer Token設定
 
